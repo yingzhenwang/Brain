@@ -19,7 +19,7 @@ def movement_classifier(data, time, down_sample_rate = 100):
 
     
     # 3. Use threshold to determine movement intervals
-    predicted_event = [x for x in range(len(t_stat)) if t_stat[x] > threshold_events]
+    predicted_event = [x for x in range(len(t_stat)) if t_stat[x] < threshold_events]
     # time vector for middle of each window 
     time_middle = []
     for i in predicted_event:
