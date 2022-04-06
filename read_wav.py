@@ -4,7 +4,7 @@ import wave
 import sys
 
 
-spf = wave.open("Spiker_box_Louis/Short/LLL_L1.wav", "r")
+spf = wave.open("/Users/martinhuang/Desktop/OneDrive/2022/2022 Sem 1/DATA3888/Brain 5/Brain/Spiker_box_Louis/Short/LLL_L1.wav", "r")
 
 signal = spf.readframes(-1)
 signal = np.fromstring(signal, np.int16)
