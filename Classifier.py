@@ -1,39 +1,54 @@
+from random import sample
 import numpy as np
 
+def movement_calssifier(data, xtime, sample_rate):
+    # able to modify these
+    window_size = 0.1
+    threshold_events = 110
+    down_sample_rate = 100
 
-def eye_movement(Y, time, windowSize = 0.5, thresholdEvents = 20, downSampleRate = 50):
+    # 1. Down Sampling
+    ind = np.arange(0, np.where(xtime == round(xtime[len(xtime) - 1] - window_size, 4))[0][0], down_sample_rate)
 
-    ind = np.array(range(1, np.where(time == np.round(time[len(time) - 1], 4) + 1) + 1))
-    ind = np.array(range(1, ind[len(ind)], step = downSampleRate))
+    t_stat = [0]*len(ind)
 
-    timeMiddle = time[ind] + windowSize/2
-    zc = mean = [] 
-
-    testStat = []
+    # 2. Calculating SD
     for i in range(len(ind)):
-        trueFalse = 0
-        # ??? 
-        # IN R:
-        # Y_subset <- Y[time >= time[ind[i]] & time < time[ind[i]] + windowSize]
-        # try python: not sure
-        # if time >= time[ind[i]] and time < time[ind[i]] + windowSize:
+        data_subset = data[ind[i] : ind[i] + int(window_size * sample_rate)]
+        t_stat[i] = np.std(data_subset)
 
-        if (sum(Y_subset[0:len(Y_subset) - 1)] * Y_subset[1:len(Y_subset)] <= 0) == True:
-            trueFalse += 1
-        
-        testStat.append(trueFalse)
+    
+    # 3. Use threshold to determine movement intervals
+    predicted_event = [x for x in range(len(t_stat)) if t_stat[x] > threshold_events]
+    # time vector for middle of each window 
+    time_middle = []
+    for i in predicted_event:
+        time_middle.append(xtime[ind[i]] + window_size/2)
 
-    predictedEvent = np.where(testStat < thresholdEvents)
-    eventTimes = timeMiddle[predictedEvent]
-    gaps = np.where(diff(eventTimes) > windowSize)
+    # 4. Estimation 
+    intervals = [] 
+    cut_point = predicted_event[0]
+    middle_time = int(sample_rate * window_size/2)
+    for i in range(len(predicted_event) - 1):
+        if predicted_event[i+1] != predicted_event[i] + 1:
+            intervals.append((ind[cut_point] + middle_time, ind[predicted_event[i]] + middle_time))
+            cut_point = predicted_event[i+1]
+    intervals.append((ind[cut_point] + middle_time, ind[predicted_event[-1]] + middle_time))
 
-    event_time_interval = min(eventTimes)
+    return intervals
 
-    for i in 1:len(gaps):
-        event_time_interval.append(event_time_interval, )
+def extract_signal(limits, data):
+    # given one interval of movement, return the corresponding values
+    if limits[0] >= limits[1]: # Invalid signal due to some noise, output error.
+        print("Missing signal")
+        return [0]
+
+    ret_data = [] 
+    for i in range(len(data)):
+        if i >= limits[0] and i < limits[1]:
+            ret_data.append(data[i])
+
+    return ret_data
 
 
-            
 
-
-            
