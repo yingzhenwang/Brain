@@ -2,6 +2,18 @@ import serial
 import numpy as np
 import matplotlib.pyplot as plt
 import time
+from scipy import fftpack
+from scipy.signal import butter, filtfilt
+
+
+def butter_lowpass_filter(data, cutoff, fs, order):
+    nyq = 0.3*fs
+    normal_cutoff = cutoff / nyq
+    # Get the filter coefficients 
+    b, a = butter(order, normal_cutoff, btype='low', analog=False)
+    y = filtfilt(b, a, data)
+    return y
+
 
 def read_arduino(ser,inputBufferSize):
 #    data = ser.readline(inputBufferSize)
@@ -27,7 +39,7 @@ def process_data(data):
 # Read example data
 baudrate = 230400
 #cport = 'COM12'  # set the correct port before you run it
-cport = '/dev/cu.usbserial-DJ00DVKR'#.usbmodem141101'  # set the correct port before run it
+cport = '/dev/tty.usbmodem14101'#.usbmodem141101'  # set the correct port before run it
 ser = serial.Serial(port=cport, baudrate=baudrate)
 
 inputBufferSize = 10000 # keep betweein 2000-20000
@@ -53,6 +65,15 @@ k = 0
 while k < N_loops: #Will end early so can't run forever.
     data = read_arduino(ser,inputBufferSize)
     data_temp = process_data(data)
+    signal = data_temp.readframes(-1)
+    signal = np.frombuffer(signal, np.int16)
+    fs = data_temp.getframerate()
+    sig = data_temp
+    cutoff = 5
+    order = 2
+    data  = butter_lowpass_filter(sig, cutoff, fs, order)
+    data_temp = data 
+
     if k <= N_max_loops:
         if k==0:
             data_plot = data_temp
