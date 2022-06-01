@@ -1,7 +1,7 @@
 # Brain 5
 
 ## Repository Summary
-In this repository, we have folders which split up tasks. In the Classifier folder, we have all classifier for training data. The Training Data folder holds wave files collected by our team using the SpikerBox and includes various wave lenghts and also error wave files. The Chrome folder holds the code for operating the Chrome Website using our classifier and is the script we ran in our final presentation, live.py is for controlling video play/pause and fastforward, present.py is for controlling our presentation. 
+In this repository, we have folders which split up tasks. In the Classifier folder, we have all classifier for training data. The Training Data folder holds wave files collected by our team using the SpikerBox and includes various wave lenghts and also error wave files. The Chrome folder holds the code for operating the Chrome Website using our classifier and is the script we ran in our final presentation, live.py is for controlling video play/pause and fastforward, present.py is for controlling our presentation. The report tex code and all figures in the report can be found under the "Report Latex" folder. This was created from a shared tex file through Overleaf and was contributed by all group members. 
 
 ## Reproducible Code for Output Graphs
 In "notebook.ipynb", this holds all the code for our graphs in the final report and also contains the final classifier for training data. It also includes our configuration of the classifier training. 
