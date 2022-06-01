@@ -7,8 +7,7 @@ In this repository, we have folders which split up tasks. In the Classifier fold
 In "notebook.ipynb", this holds all the code for our graphs in the final report and also contains the final classifier for training data. It also includes our configuration of the classifier training. 
 
 ## Requirements
-Please refer to the "requirements.txt" file to see packages needed to run code. In addition to this, we ran our scripts on M1 Macbooks. In "Live_Classifier.py", in order to run it you must........................
-
+Please refer to the "requirements.txt" file to see packages needed to run code. In addition to this, we ran our scripts on M1 Macbooks. In "Live_Classifier.py", in order to run it you must modify line 21 of Chrome/live.py to make sure you have the correct directory of the chromedriver for your browser. And line 19 change c_port to the port your SpikerBox is connected to.
 
 
 ## Group Members
