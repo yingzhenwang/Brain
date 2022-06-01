@@ -5,11 +5,7 @@ import matplotlib.pyplot as plt
 from drawnow import *
 from scipy.signal import butter, filtfilt
 from scipy import fftpack
-from tsfeatures import tsfeatures
 
-from scipy.io import wavfile
-from scipy import signal
-from sklearn.linear_model import LinearRegression
 
 
 
